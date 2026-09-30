@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An evidence-led assessment of GlassBench and TradingAgents for this Backtesting workspace.">
+  <title>GlassBench &amp; TradingAgents — Research Assessment</title>
+  <style>
+    :root {
+      --ink: #1b2421;
+      --muted: #5d6d67;
+      --paper: #f4f4ef;
+      --panel: #fffefa;
+      --line: #d8ddd7;
+      --deep: #133f36;
+      --green: #258168;
+      --mint: #e0f0e8;
+      --amber: #b36f14;
+      --amber-bg: #fff0d5;
+      --red: #9b3b33;
+      --red-bg: #f9e3df;
+      --code: #142b25;
+      --shadow: 0 15px 36px rgb(20 47 38 / 9%);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: linear-gradient(155deg, #e6eee8 0, transparent 32rem), var(--paper); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 17px; line-height: 1.62; }
+    main { width: min(1080px, calc(100% - 36px)); margin: 0 auto; padding: 64px 0 96px; }
+    .kicker { margin: 0 0 14px; color: var(--green); font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1, h2, h3 { color: var(--deep); line-height: 1.1; letter-spacing: -.035em; }
+    h1 { max-width: 900px; margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(3rem, 7vw, 6rem); }
+    h2 { margin: 0 0 18px; font-size: clamp(1.7rem, 3vw, 2.55rem); }
+    h3 { margin: 0 0 8px; font-size: 1.12rem; }
+    p { margin: 0 0 16px; }
+    a { color: var(--green); font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: .17em; }
+    .lede { max-width: 760px; margin: 22px 0 0; color: #35453e; font-family: Georgia, "Times New Roman", serif; font-size: clamp(1.18rem, 2.3vw, 1.48rem); }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 0; }
+    .meta span { border: 1px solid #afd0be; border-radius: 999px; padding: 5px 11px; color: var(--deep); background: #f7fcf8; font-size: .8rem; font-weight: 750; }
+    .report-nav { display: flex; flex-wrap: wrap; gap: 14px; margin: 48px 0 26px; padding-bottom: 18px; border-bottom: 1px solid var(--line); font-size: .9rem; }
+    .report-nav a { color: var(--muted); }
+    section { margin-top: 26px; padding: 29px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); box-shadow: var(--shadow); }
+    .verdict { border: 0; border-radius: 20px; background: var(--deep); color: #f4faf6; box-shadow: 0 18px 46px rgb(10 49 40 / 23%); }
+    .verdict h2, .verdict h3 { color: white; }
+    .verdict .kicker { color: #a6e2c3; }
+    .verdict-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; align-items: start; }
+    .score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .score { padding: 14px; border: 1px solid rgb(255 255 255 / 18%); border-radius: 12px; background: rgb(255 255 255 / 8%); }
+    .score small, .score strong { display: block; }
+    .score small { color: #b8d8ca; font-size: .74rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .score strong { margin-top: 5px; font-size: 1.05rem; }
+    .status { display: inline-block; margin-bottom: 8px; border-radius: 999px; padding: 3px 9px; font-size: .72rem; font-weight: 850; letter-spacing: .07em; text-transform: uppercase; }
+    .status.good { color: #125a3e; background: #d9f2e2; }
+    .status.caution { color: #744405; background: #ffe5b8; }
+    .status.no { color: #782b24; background: #f8d7d1; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+    .card { min-height: 100%; padding: 20px; border: 1px solid #dce6df; border-radius: 14px; background: #fbfdf9; }
+    .phase-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 18px; }
+    .phase { min-height: 100%; padding: 17px; border: 1px solid #cfe1d6; border-radius: 14px; background: #f5faf6; }
+    .phase .number { display: block; margin-bottom: 8px; color: var(--green); font-size: .78rem; font-weight: 850; letter-spacing: .08em; }
+    .phase h3 { font-size: 1rem; }
+    .phase p { margin: 0; font-size: .9rem; line-height: 1.5; }
+    .callout { margin-top: 17px; padding: 17px 18px; border-left: 5px solid var(--amber); border-radius: 8px; background: var(--amber-bg); }
+    .risk { border-left-color: var(--red); background: var(--red-bg); }
+    table { width: 100%; margin-top: 16px; border-collapse: collapse; overflow: hidden; border: 1px solid #d9e3dc; border-radius: 12px; font-size: .94rem; }
+    th, td { padding: 13px 14px; border-bottom: 1px solid #d9e3dc; text-align: left; vertical-align: top; }
+    th { color: var(--deep); background: #edf6ef; font-size: .76rem; letter-spacing: .06em; text-transform: uppercase; }
+    tr:last-child td { border-bottom: 0; }
+    code { border-radius: 4px; padding: .12em .32em; background: #e7efe9; color: #174739; font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; font-size: .9em; }
+    pre { overflow-x: auto; margin: 16px 0 0; border-radius: 12px; padding: 18px; background: var(--code); color: #e5f6e9; font-size: .9rem; line-height: 1.55; }
+    pre code { padding: 0; background: transparent; color: inherit; }
+    ol, ul { margin: 0; padding-left: 1.25rem; }
+    li + li { margin-top: 8px; }
+    .evidence { margin: 0; padding-left: 0; list-style: none; }
+    .evidence li { position: relative; padding: 14px 0 14px 30px; border-bottom: 1px solid #e1e8e2; }
+    .evidence li:last-child { border-bottom: 0; }
+    .evidence li::before { position: absolute; left: 0; top: 16px; width: 16px; height: 16px; border: 2px solid var(--green); border-radius: 50%; content: ""; }
+    .evidence time { display: block; color: var(--muted); font-size: .8rem; font-weight: 800; }
+    .footnote { color: var(--muted); font-size: .88rem; }
+    footer { margin-top: 38px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
+    @media (max-width: 720px) { main { width: min(100% - 26px, 1080px); padding-top: 35px; } section { padding: 22px; } .verdict-grid, .two-col, .phase-grid { grid-template-columns: 1fr; } .score-grid { grid-template-columns: 1fr 1fr; } table { display: block; overflow-x: auto; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="kicker">Backtesting workspace · independent assessment · 30 September 2026</p>
+  <h1>Useful research harnesses.<br>Wrong place for trading conviction.</h1>
+  <p class="lede">GlassBench and TradingAgents make LLM-agent trading experiments visible and auditable. They are worth studying for slow, equity-oriented research. They should not replace the workspace’s price-action, FX, gold, futures, or quantified backtesting process.</p>
+  <div class="meta"><span>Primary-source review</span><span>Repository + video transcript</span><span>Backtesting workspace reviewed</span><span>No live-trading recommendation</span></div>
+
+  <nav class="report-nav" aria-label="Report sections">
+    <a href="#verdict">Verdict</a><a href="#what-they-are">What they are</a><a href="#evidence">Evidence</a><a href="#fit">Workspace fit</a><a href="#plan">Implementation plan</a><a href="#evaluation">Safe evaluation</a><a href="#sources">Sources</a>
+  </nav>
+
+  <section id="verdict" class="verdict">
+    <div class="verdict-grid">
+      <div>
+        <p class="kicker">Bottom line</p>
+        <h2>Do not adopt either as a live strategy engine.</h2>
+        <p>Keep TradingView/vectorbt-style, rule-defined research as the source of truth for tradeable hypotheses. Treat these projects as an optional laboratory for answering a narrower question: <em>can an LLM research committee add value to a slow, liquid equity research workflow after costs and uncertainty?</em></p>
+        <p>The answer is not established. The tool authors themselves document non-deterministic ratings, limited pilot evidence, and paper-only broker demonstrations.</p>
+      </div>
+      <div class="score-grid" aria-label="Suitability scorecard">
+        <div class="score"><small>Research transparency</small><strong>Strong</strong></div>
+        <div class="score"><small>Model comparison</small><strong>Useful</strong></div>
+        <div class="score"><small>Price action / FX / futures</small><strong>Weak fit</strong></div>
+        <div class="score"><small>Live deployment</small><strong>Do not use</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="what-they-are">
+    <p class="kicker">Architecture</p>
+    <h2>One is the engine; the other is the laboratory around it.</h2>
+    <table>
+      <thead><tr><th>Tool</th><th>What it does</th><th>What it does not solve</th></tr></thead>
+      <tbody>
+        <tr><td><strong>TradingAgents</strong></td><td>The core Python/LangGraph multi-agent framework: analyst roles, bull/bear debate, trader, risk team, portfolio manager, reports, memory, and a built-in backtest command.</td><td>It has no claim of stable or reproducible alpha. Its core output remains an LLM-generated research decision.</td></tr>
+        <tr><td><strong>GlassBench</strong></td><td>A local UI/workbench that runs unmodified TradingAgents and AI Hedge Fund, records runs in SQLite, replays agent activity, compares models, backtests saved decisions, and can prepare paper-broker orders.</td><td>It does not make the underlying agents more predictive. It makes their work inspectable.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>Version note:</strong> GlassBench currently documents TradingAgents <code>v0.5.1</code>; the checked TradingAgents release is <code>v0.5.2</code>. A future experiment should record the exact commit/version rather than assume the wrapper and engine remain aligned.</div>
+  </section>
+
+  <section id="evidence">
+    <p class="kicker">What the sources actually support</p>
+    <h2>The strongest evidence argues for careful experimentation, not confidence.</h2>
+    <ul class="evidence">
+      <li><time>TradingAgents repository</time><strong>It is explicitly a research framework.</strong> The project says performance varies with model, temperature, period, and data quality; it is not investment or trading advice.</li>
+      <li><time>TradingAgents reproducibility section</time><strong>Same ticker/date runs can differ.</strong> The project attributes this to model sampling and moving live inputs. It notes that historical runs can still receive changing social/news content.</li>
+      <li><time>GlassBench backtest method</time><strong>The simulator has sensible controls.</strong> It uses weekly decisions, next-open fills, trading costs, buy-and-hold and moving-average baselines, plus a shuffled-rating placebo.</li>
+      <li><time>GlassBench pilot</time><strong>The reported pilot was not encouraging.</strong> Its level-based agent trades lost money while buy-and-hold and the moving-average baseline gained. The author calls the small pilot a method check, not evidence of skill.</li>
+      <li><time>Creator video · 10:02</time><strong>Identical settings did not imply identical output.</strong> Two Microsoft runs, two minutes apart, produced opposite ratings. This is a critical warning against following one rating.</li>
+      <li><time>Creator video · 10:27–12:21</time><strong>The broker demonstration is plumbing, not validation.</strong> It is paper-only, long-only, fixed-size, and the creator says one paper order says nothing about returns.</li>
+    </ul>
+  </section>
+
+  <section id="fit">
+    <p class="kicker">Fit for this workspace</p>
+    <h2>Where it helps, and where it conflicts with how we should trade.</h2>
+    <div class="two-col">
+      <div class="card">
+        <span class="status good">Potentially useful</span>
+        <h3>Slow equity research experiments</h3>
+        <ul>
+          <li>Audit an LLM’s equity thesis, sources, disagreement, cost, and repeatability.</li>
+          <li>Compare model/provider behaviour on a fixed stock-and-date grid.</li>
+          <li>Generate hypotheses for a separate, rule-based test—never convert prose directly into orders.</li>
+          <li>Study how a committee structure changes an analyst’s reasoning, rather than assuming it adds alpha.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="status no">Poor core fit</span>
+        <h3>Price action, FX, gold, and futures</h3>
+        <ul>
+          <li>The default roles are company-fundamentals, news, social-sentiment, and indicator analysts—not bar-by-bar market-structure readers.</li>
+          <li>The documented simulator is weekly, long-only, and uses next-session-open fills; it cannot validate intraday execution, shorting, or futures margin behaviour.</li>
+          <li>FX/futures adaptation needs different data, session rules, contract rolls, costs, position sizing, and a strategy specification before LLM output is even considered.</li>
+          <li>An eight-minute agent run cannot serve a short-horizon price-action decision loop.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout risk"><strong>My view:</strong> the real risk is not only bad predictions. It is narrative persuasion: an elaborate committee can create a highly readable reason for a trade without producing a measurable edge. The richer the explanation, the stronger the discipline must be around out-of-sample testing and baselines.</div>
+  </section>
+
+  <section id="plan">
+    <p class="kicker">Workspace-grounded plan · no build performed</p>
+    <h2>Build a narrow adapter around the system you already trust.</h2>
+    <p>The semantic review covered the Backtesting workspace’s first-party code, tests, project briefs, configuration, and reports (excluding vendored libraries, virtual environments, caches, and raw/binary data). It found a mature FX/futures foundation: local TradingView exports, <code>TVData</code>, VectorBT Pro, Numba execution, custom session logic, campaign records, and locked-holdout validation. This changes the recommendation: do not clone either repository into the trading stack and do not start a new strategy engine.</p>
+    <table>
+      <thead><tr><th>Existing asset</th><th>Evidence from this workspace</th><th>Role in an agent experiment</th></tr></thead>
+      <tbody>
+        <tr><td>Market data &amp; sessions</td><td><a href="../utils/get_data.py">TradingView loader</a> supports OANDA/TVC and CME/CBOT/NYMEX with exchange timezones. <a href="../breakout_levels/PROGRESS.md">Breakout Levels</a> records 2016–2026 five-minute EUR/USD and US500 data plus DST-aware CME sessions.</td><td>Produce a frozen, timestamped market packet. Agents never fetch live or revised history themselves.</td></tr>
+        <tr><td>Execution truth</td><td><a href="../breakout_levels/BACKTEST_RULES.md">Backtest rules</a> define gap fills, reversals, end-of-session liquidation, ambiguity policies, costs, and strict rejection before performance metrics.</td><td>Remain the only simulator. Agent prose must never place an order or choose an advantageous intrabar path.</td></tr>
+        <tr><td>Reproducibility &amp; validation</td><td><a href="../breakout_levels/src/breakout_levels/experiments.py">Experiment code</a> fingerprints OHLC data and records configuration/version; <a href="../breakout_levels/src/breakout_levels/validation.py">validation code</a> locks the final holdout. The separate validation bundle has causal, execution, robustness, and reconciliation tests.</td><td>Record every prompt, model, response, input fingerprint, schema result, repeat count, and baseline comparison next to the deterministic trial.</td></tr>
+        <tr><td>Strategy inventory</td><td>There are already price-action and breakout tracks for <a href="../AlBrooks/MISSION.md">Al Brooks</a>, <a href="../BobVolman_PriceAction/MISSION.md">Bob Volman EUR/USD M5</a>, <a href="../01_First_Strike/00_strategy.py">First Strike FX/indices</a>, ATR breakouts, and futures-oriented studies.</td><td>Use one pre-existing, rules-defined setup at a time. The first agent question is whether it should be <em>skipped</em>, not how to invent a setup.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>Recommended starting instrument:</strong> EUR/USD five-minute, using the existing Bob Volman / Breakout Levels research path. It has the deepest dedicated local data and a stated M5 mission. Add one CME market only after the identical protocol passes on EUR/USD; do not mix spot-FX session conventions with futures contract mechanics in the first study.</div>
+    <div class="phase-grid" aria-label="Four-phase implementation sequence">
+      <article class="phase"><span class="number">PHASE 0</span><h3>Freeze the contract</h3><p>Choose one existing setup, exact period, point-in-time data snapshot, session convention, costs, and locked out-of-sample window. Record a no-trade baseline.</p></article>
+      <article class="phase"><span class="number">PHASE 1</span><h3>Create a market packet</h3><p>Export only causal facts: OHLC window, named levels, session state, deterministic setup flags, risk limits, and data fingerprint. No news, social feed, browser tool, or broker credential.</p></article>
+      <article class="phase"><span class="number">PHASE 2</span><h3>Run shadow committees</h3><p>Call a pinned TradingAgents-based workflow only on that packet. Force JSON: <code>no_trade | long | short</code>, invalidation, confidence, reasons, and rule citations. Repeat identical packets to measure instability.</p></article>
+      <article class="phase"><span class="number">PHASE 3</span><h3>Score, then decide</h3><p>Feed the structured decision into the existing simulator as a filter, never as an order source. Compare with the identical deterministic setup, no-trade, shuffled decisions, and repeated-run agreement on the locked holdout.</p></article>
+    </div>
+    <h3 style="margin-top: 28px;">What we reuse from each GitHub repository</h3>
+    <table>
+      <thead><tr><th>Repository</th><th>Reuse</th><th>Do not reuse</th></tr></thead>
+      <tbody>
+        <tr><td>TradingAgents</td><td>Its role separation and debate/audit pattern, but only after replacing equity-specific analyst roles with explicit market-structure, setup-validity, risk, and sceptic roles.</td><td>Yahoo/news/social-driven inputs, unconstrained trade recommendations, its equity-oriented default backtest, and any claim that one run is a signal.</td></tr>
+        <tr><td>GlassBench</td><td>Its workbench ideas: event timeline, stored runs, model comparison, a visible decision trail, and placebo baselines.</td><td>Its weekly long-only equity simulator, its paper-broker workflow, and its version-pinned wrapper as the execution layer.</td></tr>
+      </tbody>
+    </table>
+    <pre><code>Deterministic OHLC + declared levels + session state
+                     │  fingerprinted market packet
+                     ▼
+      optional constrained committee (shadow mode only)
+                     │  validated JSON + repeated-run agreement
+                     ▼
+ existing Breakout Levels execution + walk-forward validation
+                     │
+                     ▼
+             report evidence / retain or reject
+
+No agent → broker path. No narrative → direct order path.</code></pre>
+    <div class="callout risk"><strong>Implementation gate:</strong> do not create an adapter until we select one precise existing setup and predeclare its baseline, costs, session definition, and acceptance criteria. The current Breakout Levels EUR/USD campaign is correctly marked <code>needs-better-data</code> because unresolved dual-cross ambiguity exists; an LLM overlay cannot repair that data/execution problem.</div>
+  </section>
+
+  <section id="evaluation">
+    <p class="kicker">If we decide to explore it</p>
+    <h2>A safe evaluation protocol</h2>
+    <p>Do not begin with broker access, a large watchlist, or a custom fork. Start with a bounded research question and stop if the harness cannot meet it.</p>
+    <ol>
+      <li><strong>Research-only sandbox.</strong> Use a clean local installation, no broker variables, no account connection, and one recorded engine version/commit.</li>
+      <li><strong>Choose an equity question the framework matches.</strong> Two liquid US equities, weekly decisions, and a pre-declared holding rule are sufficient for a first method test.</li>
+      <li><strong>Freeze the experimental design.</strong> Fix provider, model IDs, temperature where honoured, analyst set, debate depth, dates, transaction costs, and decision-to-position mapping before looking at returns.</li>
+      <li><strong>Measure instability.</strong> Repeat each ticker/date at least several times. Track rating agreement and the dispersion of decision levels before studying P&amp;L.</li>
+      <li><strong>Use real baselines.</strong> Compare against buy-and-hold, a simple moving-average rule, and a shuffled-rating placebo; use next-bar/open fills and realistic costs.</li>
+      <li><strong>Separate development and final evaluation.</strong> Keep a final date range untouched until all model and rule choices are frozen. No broker consideration unless the untouched test clears pre-declared risk and robustness gates.</li>
+    </ol>
+    <pre><code>Adoption gate
+────────────
+No point-in-time leakage demonstrated     → stop
+High same-date rating disagreement        → stop or redesign
+No improvement over simple baselines      → stop
+Only a small / in-sample result           → stop
+Any desire to use real money              → paper-only review first</code></pre>
+  </section>
+
+  <section>
+    <p class="kicker">What a genuine adaptation would require</p>
+    <h2>It is a separate research build, not a configuration change.</h2>
+    <table>
+      <thead><tr><th>Required layer</th><th>What must be replaced or added for price-action instruments</th></tr></thead>
+      <tbody>
+        <tr><td>Data contract</td><td>Point-in-time TradingView or broker OHLCV for the exact FX pair, gold instrument, or futures contract; documented timezone, sessions, rollover, and missing-bar policy.</td></tr>
+        <tr><td>Research roles</td><td>Market-structure / context / risk roles defined from explicit rules, replacing company fundamentals and social-sentiment narratives.</td></tr>
+        <tr><td>Decision model</td><td>A constrained setup schema: direction, entry trigger, invalidation, stop, target, time stop, risk amount, and “no trade.” Natural-language explanation is secondary.</td></tr>
+        <tr><td>Simulator</td><td>Intraday fills, spread/slippage, commissions, leverage, contract multipliers, shorting, session exits, and risk limits.</td></tr>
+        <tr><td>Validation</td><td>Walk-forward splits, parameter lock-down, repeated model runs, and comparison against a deterministic implementation of the same setup rules.</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>Practical conclusion:</strong> if we ever build this, the deterministic price-action specification and simulator should come first. An LLM committee would be an optional research overlay, not the component that decides whether a setup exists.</div>
+  </section>
+
+  <section id="sources">
+    <p class="kicker">Sources and artifact record</p>
+    <h2>Primary sources used</h2>
+    <ul>
+      <li><a href="https://github.com/davidalmeida90/glassbench">GlassBench repository</a> and its <a href="https://github.com/davidalmeida90/glassbench/blob/main/docs/backtest-method.md">backtest method</a>.</li>
+      <li><a href="https://github.com/TauricResearch/TradingAgents">TradingAgents repository</a>, including its market, backtest, and reproducibility documentation.</li>
+      <li><a href="https://youtu.be/Bvucb9BpJ1U">Creator walkthrough: “Open Source AI Trading Agents on DeepSeek: Setup to a Broker Order”</a>, transcript reviewed on 2026-09-30.</li>
+    </ul>
+    <p class="footnote">Detailed retrieval notes, timestamped video evidence, and the workspace assessment record live in <a href="sources/evidence.md">sources/evidence.md</a>. This report stores no API keys, account details, market data, cloned source code, or broker configuration.</p>
+  </section>
+
+  <footer>
+    <strong>Assessment status:</strong> research and workspace assessment complete; no installation or trading-system change performed. Revisit only for the bounded EUR/USD M5 shadow experiment described above, after its deterministic data and execution gates are satisfied.
+  </footer>
+</main>
+</body>
+</html>
